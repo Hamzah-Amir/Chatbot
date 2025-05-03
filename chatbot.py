@@ -7,7 +7,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain.docstore.document import Document
 from langchain.memory import ConversationBufferWindowMemory
 from langchain_core.runnables import RunnablePassthrough
-import pymupdf as fitz
+import pymupdf
 
 gemini_key = os.getenv("GEMINI_API_KEY")
 SYSTEM_PROMPT = """You are an expert tutor with a Master's degree in **Physics**, **Mathematics**, **English**, and **Chemistry**, and **History**, and **Geography**. Your job is to help students prepare for university entry tests.
