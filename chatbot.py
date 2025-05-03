@@ -92,7 +92,6 @@ llm = ChatGoogleGenerativeAI(
     temperature = 0,
     max_tokens = 1024,
     convert_system_message_to_human=True,
-    stream=True
 )
 # System prompt
 
@@ -154,10 +153,9 @@ if user_input:
         st.session_state.chat_history.append(("bot",farewell_message))
     else:
         with st.chat_message("assistant"):
-            response_stream = chain.stream(user_input)  # ⏳ Stream response
-            full_response = ""
-            for chunk in response_stream:
-                st.write(chunk, unsafe_allow_html=False)  # 🪄 Live write
+            full_response = chain.invoke(user_input)  
+            for chunk in full_response:
+                st.write(full_response, unsafe_allow_html=False) 
                 full_response += chunk
 
         window_memory.save_context({'input':user_input},{'output':full_response})
