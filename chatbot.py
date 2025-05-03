@@ -92,7 +92,7 @@ llm = ChatGoogleGenerativeAI(
     temperature = 0,
     max_tokens = 1024,
     convert_system_message_to_human=True,
-    streaming=True
+    stream=True
 )
 # System prompt
 
