@@ -24,6 +24,8 @@ you should explain topics to user in simple and easy words without unnecessary d
 - If user uploads PDF file then you should use it to generate MCQs.
 - If user asks you to explain any topic then you should explain it in a way that is easy to understand.
 - You should explain the topics only from the uploaded PDF file if uploaded.
+- The MCQs asked should not about the main topic of pdf instead it should be about the data inside the PDF file.
+- also track the score of users correct and wrong answers.
 """
 
 
@@ -35,12 +37,17 @@ llm = ChatGoogleGenerativeAI(
     convert_system_message_to_human=True,
 )
 # Window Memory
-window_memory = ConversationBufferWindowMemory(
-    return_messages = True,
-    memory_key="chat_history",
-    input_key="input",
-    k=5
-)
+
+# Check if window_memory exists in session state, otherwise initialize it
+if 'window_memory' not in st.session_state:
+    st.session_state.window_memory = ConversationBufferWindowMemory(
+        return_messages=True,
+        memory_key="chat_history",
+        input_key="input",
+        k=5
+    )
+
+window_memory = st.session_state.window_memory
 
 # Prompt Template
 prompt = ChatPromptTemplate.from_messages([

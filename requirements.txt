@@ -5,3 +5,4 @@ langchain-core
 langchain-community
 PyMuPDF
 fitz
+langgraph
