@@ -5,3 +5,13 @@ langchain-core
 langchain-community
 PyMuPDF
 fitz
+
+if 'window_memory' not in st.session_state:
+    st.session_state.window_memory = ConversationBufferWindowMemory(
+        return_messages=True,
+        memory_key="chat_history",
+        input_key="input",
+        k=5
+    )
+
+window_memory = st.session_state.window_memory

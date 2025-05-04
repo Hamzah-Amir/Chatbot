@@ -7,14 +7,13 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain.docstore.document import Document
 from langchain.memory import ConversationBufferWindowMemory
 from langchain_core.runnables import RunnablePassthrough
-import pymupdf
+import pymupdf as fitz
 
 gemini_key = os.getenv("GEMINI_API_KEY")
 SYSTEM_PROMPT = """You are an expert tutor with a Master's degree in **Physics**, **Mathematics**, **English**, and **Chemistry**, and **History**, and **Geography**. Your job is to help students prepare for university entry tests.
 Important:
-- You can reply to any question related to history.
+- You can reply to any question related to math, english, physics, chemistry, Computer, Geography
 - Make headings and paragraphs in your answer if necessary.
-- You can reply to any question that is related to country or geography
 - If user asks related to any other topic rathen then education do not reply him just say sorry i can't answer that question.
 - You should not reply anything that is not related to education. but if it is related to history you can answer.
 - If user asks anything related to your name or about yourself, you should not reply to that.
@@ -93,21 +92,13 @@ llm = ChatGoogleGenerativeAI(
     max_tokens = 1024,
     convert_system_message_to_human=True,
 )
-# System prompt
-
-
-
-
 # Window Memory
-if 'window_memory' not in st.session_state:
-    st.session_state.window_memory = ConversationBufferWindowMemory(
-        return_messages=True,
-        memory_key="chat_history",
-        input_key="input",
-        k=5
-    )
-
-window_memory = st.session_state.window_memory
+window_memory = ConversationBufferWindowMemory(
+    return_messages = True,
+    memory_key="chat_history",
+    input_key="input",
+    k=5
+)
 
 # Prompt Template
 prompt = ChatPromptTemplate.from_messages([
